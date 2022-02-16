@@ -9,8 +9,7 @@ var errorName = document.getElementById("errorName");
 var errorPhone = document.getElementById("errorPhone");
 
 // Exercise 6
-function validate() {
-}
+function validate() {}
 
 (function () {
   "use strict";
@@ -26,6 +25,8 @@ function validate() {
         if (!form.checkValidity()) {
           event.preventDefault();
           event.stopPropagation();
+        } else {
+          alert("Congrats, your order is on the way!");
         }
 
         form.classList.add("was-validated");
