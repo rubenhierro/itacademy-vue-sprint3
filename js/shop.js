@@ -142,8 +142,8 @@ function addToCart(id) {
   // 2. Add found product to the cart array or update its quantity in case it has been added previously.
 
   if (cart.length > 0) {
+    var exists = false;
     for (let i = 0; i < cart.length; i++) {
-      var exists = false;
       if (cart[i].id == products[id - 1].id) {
         console.log("existeix");
 
@@ -163,8 +163,7 @@ function addToCart(id) {
     cart[0].quantity = 1;
   }
 
-  //   applyPromotionsCart();
-  console.log(cart);
+  applyPromotionsCart();
 }
 
 // Exercise 8
