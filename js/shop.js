@@ -100,8 +100,8 @@ function generateCart() {
   for (let i = 0; i < cartList.length; i++) {
     console.log(cartList.length);
     if (cart.length > 0) {
+      var exists = false;
       for (let j = 0; j < cart.length; j++) {
-        var exists = false;
         if (cartList[i].id == cart[j].id) {
           cart[j].quantity++;
           exists = true;
