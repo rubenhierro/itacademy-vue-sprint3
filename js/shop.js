@@ -61,6 +61,16 @@ var cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
 
+var cartList = document.getElementById("cartList");
+var cartItems = document.getElementById("cartItems");
+
+cartList.addEventListener("click", (e) => {
+  // alert("yep");
+  // console.log(e);
+  addProduct(e.target);
+  // e.preventDefault();
+});
+
 // var total = 0;
 
 // Exercise 1
@@ -120,17 +130,25 @@ function applyPromotionsCart() {
   //   let cart = generateCart();
 
   for (let i = 0; i < cart.length; i++) {
-    if (cart[i].id == 1 && cart[i].quantity >= 3) {
-      cart[i].subtotalWithDiscount = cart[i].quantity * 10;
+    if (cart[i].id == 1) {
+      if (cart[i].quantity >= 3) {
+        cart[i].subtotalWithDiscount = cart[i].quantity * 10;
+      } else {
+        cart[i].subtotalWithDiscount = null;
+      }
     }
-    if (cart[i].id == 3 && cart[i].quantity >= 10) {
-      cart[i].subtotalWithDiscount =
-        (cart[i].quantity * cart[id].price * 2) / 3;
+    if (cart[i].id == 3) {
+      if (cart[i].quantity >= 10) {
+        cart[i].subtotalWithDiscount = (
+          (cart[i].quantity * cart[i].price * 2) /
+          3
+        ).toFixed(2);
+      } else {
+        cart[i].subtotalWithDiscount = null;
+      }
     }
     cart[i].subtotal = cart[i].price * cart[i].quantity;
   }
-
-  console.log(cart);
 }
 
 // ** Nivell II **
@@ -174,7 +192,7 @@ function removeFromCart(id) {
   if (cart.length > 0) {
     for (let i = 0; i < cart.length; i++) {
       if (cart[i].id == id) {
-        if (cart[i].quantity > 2) {
+        if (cart[i].quantity >= 2) {
           cart[i].quantity--;
         } else {
           cart.splice(i, 1);
@@ -185,16 +203,74 @@ function removeFromCart(id) {
   applyPromotionsCart();
 }
 
-// Exercise 9
-function printCart() {
-  // Fill the shopping cart modal manipulating the shopping cart dom
-  const cartList = document.getElementById("cartList");
+function deleteFromCart(id) {
+  // 1. Loop for to the array products to get the item to add to cart
+  // 2. Add found product to the cartList array
 
   for (let i = 0; i < cart.length; i++) {
-    let element = document.createElement("li");
+    if (cart[i].id == id) {
+      cart.splice(i, 1);
+    }
+  }
+}
+
+// Exercise 9
+
+function printCart() {
+  // Fill the shopping cart modal manipulating the shopping cart dom
+
+  // const cartList = document.getElementById("cartList");
+  // const cartItems = document.getElementById("cartItems");
+
+  cartItems.innerHTML = "";
+  cartList.appendChild(cartItems);
+
+  for (let i = 0; i < cart.length; i++) {
+    const element = document.createElement("div");
     element.innerHTML = `
-    ${cart[i].name}
-    `;
-    cartList.appendChild(element);
+            <div class="card mb-4">
+                <div class="card-body">
+                    Product: ${cart[i].name} <br>
+                    Quantity: ${cart[i].quantity} <br>
+                    Price: $${cart[i].price} <br>
+                    Subtotal: $${cart[i].subtotal} <br>
+                    ${
+                      cart[i].subtotalWithDiscount > 0
+                        ? `Subtotal with discount: $` +
+                          cart[i].subtotalWithDiscount
+                        : ""
+                    } <br>
+                    <div class="row mt-2 p-2 justify-content-end">
+                      <a href="#" class="btn btn-outline-secondary text-center" name="add" data-product-id="${
+                        cart[i].id
+                      }"> + add</a>
+
+                      <a href="#" class="btn btn-outline-secondary text-center" name="remove" data-product-id="${
+                        cart[i].id
+                      }"> - remove</a>
+
+                      <a href="#" class="btn btn-outline-danger text-center" name="delete" data-product-id="${
+                        cart[i].id
+                      }">Delete</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    cartItems.appendChild(element);
+  }
+}
+
+function addProduct(element) {
+  if (element.name == "add") {
+    addToCart(parseInt(element.getAttribute("data-product-id")));
+    printCart();
+  }
+  if (element.name == "remove") {
+    removeFromCart(parseInt(element.getAttribute("data-product-id")));
+    printCart();
+  }
+  if (element.name == "delete") {
+    deleteFromCart(parseInt(element.getAttribute("data-product-id")));
+    printCart();
   }
 }
