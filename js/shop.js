@@ -61,14 +61,14 @@ var cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
 
+var modal = document.getElementById("modal");
 var cartList = document.getElementById("cartList");
 var cartItems = document.getElementById("cartItems");
+var msgEmpty = document.getElementById("msg-empty");
+var btnClean = document.getElementById("btn-clean");
 
-cartList.addEventListener("click", (e) => {
-  // alert("yep");
-  // console.log(e);
-  addProduct(e.target);
-  // e.preventDefault();
+modal.addEventListener("click", (e) => {
+  adminProduct(e.target);
 });
 
 // var total = 0;
@@ -82,7 +82,7 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-  cartList = [];
+  cart = [];
   // cartList.length = 0;
 }
 
@@ -90,8 +90,10 @@ function cleanCart() {
 function calculateTotal() {
   // Calculate total price of the cart using the "cartList" array
   let total = 0;
-  for (let i = 0; i < cartList.length; i++) {
-    total += cartList[i].price;
+  for (let i = 0; i < cart.length; i++) {
+    cart[i].subtotalWithDiscount
+      ? (total += cart[i].subtotalWithDiscount)
+      : (total += cart[i].subtotal);
   }
 
   return total;
@@ -103,7 +105,6 @@ function generateCart() {
   // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
   //   let cart = [];
   //   for (let i = 0; i < cartList.length; i++) {
-  //     console.log(cartList.length);
   //     if (cart.length > 0) {
   //       for (let j = 0; j < cart.length; j++) {
   //         var exists = false;
@@ -121,7 +122,6 @@ function generateCart() {
   //       cart[0].quantity = 1;
   //     }
   //   }
-  //   return cart;
 }
 
 // Exercise 5
@@ -163,20 +163,15 @@ function addToCart(id) {
     var exists = false;
     for (let i = 0; i < cart.length; i++) {
       if (cart[i].id == products[id - 1].id) {
-        console.log("existeix");
-
         cart[i].quantity++;
         exists = true;
       }
     }
     if (exists == false) {
-      console.log("no existeix");
-
       cart.push(products[id - 1]);
       cart[cart.length - 1].quantity = 1;
     }
   } else {
-    console.log("buit");
     cart.push(products[id - 1]);
     cart[0].quantity = 1;
   }
@@ -199,8 +194,8 @@ function removeFromCart(id) {
         }
       }
     }
+    applyPromotionsCart();
   }
-  applyPromotionsCart();
 }
 
 function deleteFromCart(id) {
@@ -218,49 +213,67 @@ function deleteFromCart(id) {
 
 function printCart() {
   // Fill the shopping cart modal manipulating the shopping cart dom
-
-  // const cartList = document.getElementById("cartList");
-  // const cartItems = document.getElementById("cartItems");
-
   cartItems.innerHTML = "";
   cartList.appendChild(cartItems);
 
-  for (let i = 0; i < cart.length; i++) {
+  if (cart.length > 0) {
+    showVisibility(btnClean);
+    hideVisibility(msgEmpty);
+    for (let i = 0; i < cart.length; i++) {
+      const element = document.createElement("div");
+      element.innerHTML = `
+              <div class="card text-dark bg-light mb-4">
+                  <div class="card-header">
+                    <h6 class="fs-4 fst-italic text-uppercase">${
+                      cart[i].name
+                    }</h6>
+                  </div>
+                  <div class="card-body">
+                      Quantity: ${cart[i].quantity} <br>
+                      Price: $${cart[i].price} <br>
+                      Subtotal: $${cart[i].subtotal} <br>
+                      ${
+                        cart[i].subtotalWithDiscount > 0
+                          ? `Subtotal with discount: $` +
+                            cart[i].subtotalWithDiscount
+                          : ""
+                      } <br>
+                      <div class="row mt-2 p-2 justify-content-end">
+                        <a href="#" class="btn btn-outline-secondary text-center" name="add" data-product-id="${
+                          cart[i].id
+                        }"> + add</a>
+  
+                        <a href="#" class="btn btn-outline-secondary text-center" name="remove" data-product-id="${
+                          cart[i].id
+                        }"> - remove</a>
+  
+                        <a href="#" class="btn btn-outline-danger text-center" name="delete" data-product-id="${
+                          cart[i].id
+                        }">Delete</a>
+                      </div>
+                  </div>
+              </div>
+          `;
+      cartItems.appendChild(element);
+    }
+    const total = calculateTotal();
     const element = document.createElement("div");
     element.innerHTML = `
-            <div class="card mb-4">
-                <div class="card-body">
-                    Product: ${cart[i].name} <br>
-                    Quantity: ${cart[i].quantity} <br>
-                    Price: $${cart[i].price} <br>
-                    Subtotal: $${cart[i].subtotal} <br>
-                    ${
-                      cart[i].subtotalWithDiscount > 0
-                        ? `Subtotal with discount: $` +
-                          cart[i].subtotalWithDiscount
-                        : ""
-                    } <br>
-                    <div class="row mt-2 p-2 justify-content-end">
-                      <a href="#" class="btn btn-outline-secondary text-center" name="add" data-product-id="${
-                        cart[i].id
-                      }"> + add</a>
-
-                      <a href="#" class="btn btn-outline-secondary text-center" name="remove" data-product-id="${
-                        cart[i].id
-                      }"> - remove</a>
-
-                      <a href="#" class="btn btn-outline-danger text-center" name="delete" data-product-id="${
-                        cart[i].id
-                      }">Delete</a>
-                    </div>
-                </div>
+            <div class="card text-dark bg-light text-center mb-4">
+              <div class="card-header">
+                <h6>TOTAL</h6>
+              </div>
+              <div class="m-3">$${total}</div>
             </div>
         `;
     cartItems.appendChild(element);
+  } else {
+    hideVisibility(btnClean);
+    showVisibility(msgEmpty);
   }
 }
 
-function addProduct(element) {
+function adminProduct(element) {
   if (element.name == "add") {
     addToCart(parseInt(element.getAttribute("data-product-id")));
     printCart();
@@ -273,4 +286,18 @@ function addProduct(element) {
     deleteFromCart(parseInt(element.getAttribute("data-product-id")));
     printCart();
   }
+  if (element.name == "clean") {
+    cleanCart();
+    printCart();
+  }
+}
+
+function showVisibility(element) {
+  element.classList.contains("d-none")
+    ? element.classList.remove("d-none")
+    : "";
+}
+
+function hideVisibility(element) {
+  element.classList.add("d-none");
 }

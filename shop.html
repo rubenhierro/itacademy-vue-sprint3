@@ -155,16 +155,17 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="modal">
             <!-- listing items starts -->
             <div id="cartList">
+              <h3 class="text-center" id="msg-empty">Empty Card!</h3>
               <div id="cartItems">
 
               </div>
             </div>
 
             <div class="text-center">
-              <a href="checkout.html" class="btn btn-outline-danger m-3">Clean cart</a>
+              <a href="#" class="btn btn-danger m-3 d-none" name="clean" id="btn-clean">Clean cart</a>
               <a href="checkout.html" class="btn btn-primary m-3">Checkout</a>
             </div>
             <!-- listing items ends -->
