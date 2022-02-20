@@ -147,7 +147,7 @@ function applyPromotionsCart() {
         cart[i].subtotalWithDiscount = null;
       }
     }
-    cart[i].subtotal = cart[i].price * cart[i].quantity;
+    cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
   }
 }
 
@@ -231,7 +231,13 @@ function printCart() {
                   <div class="card-body">
                       Quantity: ${cart[i].quantity} <br>
                       Price: $${cart[i].price} <br>
-                      Subtotal: $${cart[i].subtotal} <br>
+                      ${
+                        cart[i].subtotalWithDiscount > 0
+                          ? `<del><span class="text-danger">Subtotal: $` +
+                            cart[i].subtotal +
+                            `</span></del>`
+                          : `Subtotal: $` + cart[i].subtotal
+                      } <br>
                       ${
                         cart[i].subtotalWithDiscount > 0
                           ? `Subtotal with discount: $` +
