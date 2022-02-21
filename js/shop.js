@@ -147,7 +147,7 @@ function applyPromotionsCart() {
         cart[i].subtotalWithDiscount = null;
       }
     }
-    cart[i].subtotal = (cart[i].price * cart[i].quantity).toFixed(2);
+    cart[i].subtotal = cart[i].price * cart[i].quantity;
   }
 }
 
