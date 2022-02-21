@@ -1,4 +1,48 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins');
-body{
-    font-family: Poppins;
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+body {
+  font-family: Poppins;
+}
+
+.hero {
+  height: 800px;
+  background-image: url("../images/hero-500.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.categories {
+  margin: 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.category {
+  width: 300px;
+  height: 450px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+}
+
+.category .foot-category {
+  height: 50px;
+  width: 100%;
+  background-color: white;
+  opacity: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: black;
+  text-decoration: none;
 }
