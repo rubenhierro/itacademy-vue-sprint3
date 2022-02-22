@@ -61,11 +61,12 @@ var cartList = [];
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
 
-var modal = document.getElementById("modal");
+var modal = document.getElementById("cartModal");
 var cartList = document.getElementById("cartList");
 var cartItems = document.getElementById("cartItems");
 var msgEmpty = document.getElementById("msg-empty");
 var btnClean = document.getElementById("btn-clean");
+var btnCart = document.getElementById("cart-counter");
 
 modal.addEventListener("click", (e) => {
   adminProduct(e.target);
@@ -177,6 +178,7 @@ function addToCart(id) {
   }
 
   applyPromotionsCart();
+  countCart();
 }
 
 // Exercise 8
@@ -210,6 +212,13 @@ function deleteFromCart(id) {
 }
 
 // Exercise 9
+function countCart() {
+  btnCart.innerHTML = "";
+
+  const element = document.createElement("span");
+  element.innerHTML = cart.length;
+  btnCart.appendChild(element);
+}
 
 function printCart() {
   // Fill the shopping cart modal manipulating the shopping cart dom
@@ -295,6 +304,9 @@ function adminProduct(element) {
   if (element.name == "clean") {
     cleanCart();
     printCart();
+  }
+  if (element.name == "close") {
+    countCart();
   }
 }
 
