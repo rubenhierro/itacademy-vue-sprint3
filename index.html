@@ -18,6 +18,10 @@
 </head>
 
 <body>
+    <div class="container-fluid hero">
+
+    </div>
+
     <!-- header -->
     <header class="m-5">
         <h1 class="text-center m-5"><i class="fas fa-shopping-cart mr-2"></i> ShopNow</h1>
@@ -26,22 +30,45 @@
 
     <!-- Buttons -->
     <h3 class="text-center">Select your category:</h3>
-    <div class="text-center">
-        <button type="button" onclick="window.location.href = 'shop.html#grocery';" class="btn m-4 mt-5 btn btn-primary">Grocery</button>
-        <button type="button" onclick="window.location.href = 'shop.html#beauty';" class="btn m-4 mt-5 btn btn-primary">Beauty</button>
-        <button type="button" onclick="window.location.href = 'shop.html#clothes';" class="btn m-4 mt-5 btn btn-primary">Clothes</button>
-    </div>
+    <section>
+        <div class="categories">
+            <a href="shop.html#grocery">
+                <div class="category" style="background-image: url('./images/grocery-category.jpg');">
+                    <div class="foot-category">
+                        <h3>Grocery</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="shop.html#beauty">
+                <div class="category" style="background-image: url('./images/beauty-category.jpg');">
+                    <div class="foot-category">
+                        <h3>Beauty</h3>
+                    </div>
+                </div>
+            </a>
+            <a href="shop.html#clothes">
+                <div class="category" style="background-image: url('./images/clothes-category.jpg');">
+                    <div class="foot-category">
+                        <h3>Clothes</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
 
+    <footer>
+        <div id="footer" class="container-fluid">© ShopNow 2022</div>
+    </footer>
     <!-- script tags -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+        </script>
 </body>
 
 </html>

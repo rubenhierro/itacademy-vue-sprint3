@@ -6,3 +6,14 @@ body {
 #errorPassword, #errorName, #errorPhone {
     display: none;
 }
+
+#footer {
+    height: 50px;
+    color: white;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
