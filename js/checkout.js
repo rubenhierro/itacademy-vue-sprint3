@@ -1,12 +1,12 @@
 // Get the input fields
-var password = document.querySelector(".password");
-var phone = document.querySelector(".phone");
-var firstName = document.querySelector(".firstName");
+// var password = document.querySelector(".password");
+// var phone = document.querySelector(".phone");
+// var firstName = document.querySelector(".firstName");
 
 // Get the error elements
-var errorPassword = document.getElementById("errorPassword");
-var errorName = document.getElementById("errorName");
-var errorPhone = document.getElementById("errorPhone");
+// var errorPassword = document.getElementById("errorPassword");
+// var errorName = document.getElementById("errorName");
+// var errorPhone = document.getElementById("errorPhone");
 
 // Exercise 6
 function validate() {}
